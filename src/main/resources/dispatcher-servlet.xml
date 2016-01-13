@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+       <!-- MVC controller 层配置文件-->
+
+       <!-- **************************************************************** -->
+       <!-- SPRING ANNOTATION PROCESSING -->
+       <!-- **************************************************************** -->
+       <!--<mvc:annotation-driven conversion-service="conversionService" />-->
+       <context:component-scan base-package="com.intel.dadi.thymeleaf.demo.stsm" />
+       <context:component-scan base-package="com.ckp.cms.admin" />
+
+       <!-- **************************************************************** -->
+       <!-- CONVERSION SERVICE -->
+       <!-- Standard Spring formatting-enabled implementation -->
+       <!-- **************************************************************** -->
+<!--       <bean id="conversionService"
+             class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+              <property name="formatters">
+                     <set>
+                            <bean class="com.intel.dadi.thymeleaf.demo.stsm.web.conversion.VarietyFormatter" />
+                            <bean class="com.intel.dadi.thymeleaf.demo.stsm.web.conversion.DateFormatter" />
+                     </set>
+              </property>
+       </bean>-->
+
+       <!-- 启用spring mvc 注解 -->
+       <context:annotation-config/>
+       <mvc:annotation-driven/>
+
+       <!-- **************************************************************** -->
+       <!-- MESSAGE EXTERNALIZATION/INTERNATIONALIZATION -->
+       <!-- Standard Spring MessageSource implementation -->
+       <!-- **************************************************************** -->
+       <bean id="messageSource"
+             class="org.springframework.context.support.ResourceBundleMessageSource">
+              <property name="basename" value="Messages" />
+       </bean>
+
+       <!-- 静态资源的访问 -->
+       <mvc:default-servlet-handler/>
+
+       <!-- 对转向页面的路径解析。prefix：前缀， suffix：后缀 -->
+       <bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+              <property name="prefix" value="/admin/" />
+              <property name="suffix" value=".html"/>
+              <property name="templateMode" value="HTML5"/>
+              <property name="cacheable" value="false" />
+              <property name="characterEncoding" value="UTF-8"/>
+       </bean>
+       <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+              <property name="templateResolver" ref="templateResolver"/>
+       </bean>
+       <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+              <property name="characterEncoding" value="utf-8"/>
+              <property name="templateEngine" ref="templateEngine"/>
+       </bean>
+</beans>
