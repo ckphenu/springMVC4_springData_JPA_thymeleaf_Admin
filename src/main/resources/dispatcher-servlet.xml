@@ -14,7 +14,6 @@
        <!-- SPRING ANNOTATION PROCESSING -->
        <!-- **************************************************************** -->
        <!--<mvc:annotation-driven conversion-service="conversionService" />-->
-       <context:component-scan base-package="com.intel.dadi.thymeleaf.demo.stsm" />
        <context:component-scan base-package="com.ckp.cms.admin" />
 
        <!-- **************************************************************** -->
@@ -61,5 +60,10 @@
        <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
               <property name="characterEncoding" value="utf-8"/>
               <property name="templateEngine" ref="templateEngine"/>
+              <property name="staticVariables">
+                 <bean class="com.ckp.cms.admin.web.utils.ThymeleafStaticVariableSetUtils" factory-method="returnAmap">
+                        <constructor-arg value="cms_system_cinfig.properties" />
+                 </bean>
+              </property>
        </bean>
 </beans>

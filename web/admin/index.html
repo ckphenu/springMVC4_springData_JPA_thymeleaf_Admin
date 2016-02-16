@@ -22,7 +22,7 @@
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>H-ui.admin v2.3</title>
+<title th:text="${SYSTEM_TITLE}">后台管理系统</title>
 <meta name="keywords" content="H-ui.admin v2.3,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载" />
 <meta name="description" content="H-ui.admin v2.3，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。" />
 </head>
@@ -32,7 +32,7 @@
 		<ul>
 			<li class="dropDown dropDown_click"><a href="javascript:;" aria-expanded="true" aria-haspopup="true" data-toggle="dropdown" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
 				<ul class="dropDown-menu radius box-shadow">
-					<li><a href="javascript:;" onclick="article_add('添加资讯','article-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
+					<li><a href="javascript:;" onclick="article_add('添加资讯','/article/add')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
 					<li><a href="javascript:;" onclick="picture_add('添加资讯','picture-add.html')"><i class="Hui-iconfont">&#xe613;</i> 图片</a></li>
 					<li><a href="javascript:;" onclick="product_add('添加资讯','product-add.html')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
 					<li><a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
@@ -69,7 +69,8 @@
 			<dt><i class="Hui-iconfont">&#xe616;</i> 资讯管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a th:attr="_href=@{/admin/article-list.html}" _href="article-list.html" data-title="资讯管理" href="javascript:void(0)" >资讯管理</a></li>
+					<li><a th:attr="_href=@{/article}" _href="/article" data-title="资讯管理" href="javascript:void(0)" >资讯管理</a></li>
+					<li><a th:attr="_href=@{/article/category}" _href="/article/category" data-title="资讯分类管理" href="javascript:void(0)" >资讯分类管理</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -162,7 +163,7 @@
 			<dd>
 				<ul>
 					<li><a th:attr="_href=@{/admin/system-base.html}" _href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
-					<li><a th:attr="_href=@{/admin/system-category.html}" _href="system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
+					<li><a th:attr="_href=@{/sys/manager/column}" _href="system-column.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
 					<li><a th:attr="_href=@{/admin/system-data.html}" _href="system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
 					<li><a th:attr="_href=@{/admin/system-shielding.html}" _href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
 					<li><a th:attr="_href=@{/admin/system-log.html}" _href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>

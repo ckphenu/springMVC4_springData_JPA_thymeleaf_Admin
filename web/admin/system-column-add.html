@@ -1,20 +1,20 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta charset="utf-8" />
+<meta name="renderer" content="webkit|ie-comp|ie-stand" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <!--[if lt IE 9]>
-<script type="text/javascript" src="lib/html5.js"></script>
-<script type="text/javascript" src="lib/respond.min.js"></script>
-<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<script type="text/javascript" src="lib/html5.js" th:src="@{/admin/lib/html5.js}"/>
+<script type="text/javascript" src="lib/respond.min.js" th:src="@{/admin/lib/respond.min.js}"/>
+<script type="text/javascript" src="lib/PIE_IE678.js" th:src="@{/admin/lib/PIE_IE678.js}"/>
 <![endif]-->
-<link href="css/H-ui.min.css" rel="stylesheet" type="text/css" />
-<link href="css/H-ui.admin.css" rel="stylesheet" type="text/css" />
-<link href="lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
-<link href="lib/Hui-iconfont/1.0.6/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="css/H-ui.min.css" rel="stylesheet" type="text/css" th:href="@{/admin/css/H-ui.min.css}"/>
+<link href="css/H-ui.admin.css" rel="stylesheet" type="text/css" th:href="@{/admin/css/H-ui.admin.css}"/>
+<link href="lib/icheck/icheck.css" rel="stylesheet" type="text/css" th:href="@{/admin/lib/icheck/icheck.css}"/>
+<link href="lib/Hui-iconfont/1.0.6/iconfont.css" rel="stylesheet" type="text/css" th:href="@{/admin/lib/Hui-iconfont/1.0.6/iconfont.css}"/>
 <!--[if IE 6]>
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
@@ -23,68 +23,62 @@
 </head>
 <body>
 <div class="pd-20">
-	<form action="" method="post" class="form form-horizontal" id="form-category-add">
+	<form th:action="@{/sys/manager/column/add}" th:object="${systemColumn}" method="post" class="form form-horizontal" id="form-category-add">
 		<div id="tab-category" class="HuiTab">
 			<div class="tabBar cl"><span>基本设置</span><span>模版设置</span><span>SEO</span></div>
 			<div class="tabCon">
-				<div class="row cl">
+<!--				<div class="row cl">
 					<label class="form-label col-3">栏目ID：</label>
 					<div class="formControls col-6">11230</div>
-				</div>
+				</div>-->
 				<div class="row cl">
 					<label class="form-label col-3"><span class="c-red">*</span>上级栏目：</label>
-					<div class="formControls col-6"> <span class="select-box">
-						<select class="select" id="sel_Sub" name="sel_Sub" onchange="SetSubID(this);">
-							<option value="0">顶级分类</option>
-							<option value="10">分类一级</option>
-							<option value="101">&nbsp;&nbsp;├ 分类二级</option>
-							<option value="102">&nbsp;&nbsp;├ 分类二级</option>
-							<option value="20">分类一级</option>
-							<option value="200">&nbsp;&nbsp;├ 分类二级</option>
-						</select>
-						</span> </div>
+					<div class="formControls col-6">
+						<span class="select-box">
+							<select id="sel_Sub" name="sel_Sub" th:required="true" onchange="SetSubID(this);" class="select" th:field="*{parentId}">
+								<option value="0">顶级分类</option>
+								<option th:each="systemColumn : ${allColumns}" th:value="${systemColumn.id}" th:text="((${systemColumn.level} == 2)?'&nbsp;&nbsp;├':'') + ${systemColumn.title}">分类</option>
+							</select>
+						</span>
+					</div>
 					<div class="col-3"> </div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3"><span class="c-red">*</span>分类名称：</label>
 					<div class="formControls col-6">
-						<input type="text" class="input-text" value="" placeholder="" id="" name="" datatype="*2-16" nullmsg="用户名不能为空">
+						<input type="text" class="input-text" th:required="true" th:field="*{title}"  placeholder="请输入分类名称" id="systemColumn.title" name="title" datatype="*2-16" nullmsg="分类名称不能为空"/>
 					</div>
 					<div class="col-3"> </div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3">别名：</label>
 					<div class="formControls col-6">
-						<input type="text" class="input-text" value="" placeholder="" id="" name="">
+						<input type="text" class="input-text" th:field="*{alias}" placeholder="请输入别名" id="systemColumn.alias" name="alias"/>
 					</div>
 					<div class="col-3"> </div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3">目录：</label>
 					<div class="formControls col-6">
-						<input type="text" class="input-text" value="" placeholder="" id="" name="">
+						<input type="text" class="input-text" th:field="*{catalogue}" placeholder="请输入目录" id="systemColumn.catalogue" name="catalogue"/>
 					</div>
 					<div class="col-3"> </div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3">内容类型：</label>
 					<div class="formControls col-6"> <span class="select-box">
-						<select name="" class="select">
-							<option value="1">文章</option>
-							<option value="2">图片</option>
-							<option value="3">商品</option>
-							<option value="4">视频</option>
-							<option value="5">专题</option>
-							<option value="6">链接</option>
-						</select>
-						</span> </div>
+							<select name="" class="select" th:field="*{contentType}">
+								<option th:each="content : ${contentTypes}" th:value="${content.id}" th:text="${content.name}">文章</option>
+							</select>
+						</span>
+					</div>
 					<div class="col-3"> </div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3">是否生成静态html：</label>
 					<div class="formControls col-6 skin-minimal">
 						<div class="check-box">
-							<input type="checkbox" id="checkbox-pinglun">
+							<input type="checkbox" th:field="*{isNeedToHtml}" id="checkbox-pinglun" value="1"/>
 							<label for="checkbox-pinglun">&nbsp;</label>
 						</div>
 					</div>
@@ -95,24 +89,24 @@
 				<div class="row cl">
 					<label class="form-label col-3">首页模版：</label>
 					<div class="formControls col-6">
-						<input type="text" class="input-text" value="" style="width:200px;">
-						<input type="button" class="btn btn-default" value="浏览">
+						<input type="text" class="input-text" value="" style="width:200px;"/>
+						<input type="button" class="btn btn-default" value="浏览"/>
 					</div>
 					<div class="col-3"> </div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3">列表页模版：</label>
 					<div class="formControls col-6">
-						<input type="text" class="input-text" value="" style="width:200px;">
-						<input type="button" class="btn btn-default" value="浏览">
+						<input type="text" class="input-text" value="" style="width:200px;"/>
+						<input type="button" class="btn btn-default" value="浏览"/>
 					</div>
 					<div class="col-3"> </div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3">详情页模版：</label>
 					<div class="formControls col-6">
-						<input type="text" class="input-text" value="" style="width:200px;">
-						<input type="button" class="btn btn-default" value="浏览">
+						<input type="text" class="input-text" value="" style="width:200px;"/>
+						<input type="button" class="btn btn-default" value="浏览"/>
 					</div>
 					<div class="col-3"> </div>
 				</div>
@@ -124,13 +118,14 @@
 							<option value="2">按年/月划分子目录</option>
 							<option value="3">按年/月/日划分子目录</option>
 						</select>
-						</span> </div>
+						</span>
+					</div>
 					<div class="col-3"> </div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3">每页显示多少条：</label>
 					<div class="formControls col-6">
-						<input type="text" class="input-text" value="20" style="width:200px;">
+						<input type="text" class="input-text" value="20" style="width:200px;"/>
 					</div>
 					<div class="col-3"> </div>
 				</div>
@@ -139,14 +134,14 @@
 				<div class="row cl">
 					<label class="form-label col-3">首页文件名：</label>
 					<div class="formControls col-6">
-						<input type="text" class="input-text" value="index.html" style="width:200px;">
+						<input type="text" class="input-text" value="index.html" style="width:200px;"/>
 					</div>
 					<div class="col-3"> </div>
 				</div>
 				<div class="row cl">
 					<label class="form-label col-3">关键词：</label>
 					<div class="formControls col-6">
-						<input type="text" class="input-text" value="">
+						<input type="text" class="input-text" value=""/>
 					</div>
 					<div class="col-3"> </div>
 				</div>
@@ -162,18 +157,32 @@
 		</div>
 		<div class="row cl">
 			<div class="col-9 col-offset-3">
-				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;"/>
 			</div>
 		</div>
 	</form>
+	<div th:fragment="content" >
+		<div th:if="${display == true}" >
+			<h3>请求已提交</h3>
+			<input type="hidden" id="message" th:value="${message}" />
+			<script type="text/javascript">
+				var message = document.getElementById("message").value;
+				parent.layer.msg(message, {icon:1,time:1000}, function(){
+					parent.$('.btn-refresh').click();
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.layer.close(index);
+				});
+
+			</script>
+		</div>
+	</div>
 </div>
-</div>
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="lib/icheck/jquery.icheck.min.js"></script> 
-<script type="text/javascript" src="lib/Validform/5.3.2/Validform.min.js"></script> 
-<script type="text/javascript" src="lib/layer/2.1/layer.js"></script> 
-<script type="text/javascript" src="js/H-ui.js"></script> 
-<script type="text/javascript" src="js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js" th:src="@{/admin/lib/jquery/1.9.1/jquery.min.js}" />
+<script type="text/javascript" src="lib/icheck/jquery.icheck.min.js" th:src="@{/admin/lib/icheck/jquery.icheck.min.js}" />
+<script type="text/javascript" src="lib/Validform/5.3.2/Validform.min.js" th:src="@{/admin/lib/Validform/5.3.2/Validform.min.js}" />
+<script type="text/javascript" src="lib/layer/2.1/layer.js" th:src="@{/admin/lib/layer/2.1/layer.js}" />
+<script type="text/javascript" src="js/H-ui.js" th:src="@{/admin/js/H-ui.js}" />
+<script type="text/javascript" src="js/H-ui.admin.js" th:src="@{/admin/js/H-ui.admin.js}" />
 <script type="text/javascript">
 $(function(){
 	$('.skin-minimal input').iCheck({
@@ -189,6 +198,7 @@ $(function(){
 			var index = parent.layer.getFrameIndex(window.name);
 			parent.$('.btn-refresh').click();
 			parent.layer.close(index);
+			return true;
 		}
 	});
 	$.Huitab("#tab-category .tabBar span","#tab-category .tabCon","current","click","0");
