@@ -1,0 +1,9 @@
+language: java
+script: mvn -q clean install
+# whitelist
+branches:
+  only:
+    - develop
+notifications:
+  email:
+    - ckp_henu@163.com
